@@ -27,14 +27,18 @@ jobs:
         run: pip install poetry
 
       - name: Install Dependencies
+        working-directory: ucv-ate-si-laboratorio08
         run: poetry install
 
       - name: Run Tests with Coverage
+        working-directory: ucv-ate-si-laboratorio08
         run: |
-          poetry run pytest --cov=agente_ucv --cov-report=xml
+          poetry run pytest --cov=agente_ucv --cov-report=xml:coverage.xml
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ucv-ate-si-laboratorio08
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
