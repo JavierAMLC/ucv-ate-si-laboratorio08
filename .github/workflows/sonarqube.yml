@@ -27,14 +27,20 @@ jobs:
         run: pip install poetry
 
       - name: Install Dependencies
-        run: poetry install
+        run: poetry install --no-root
 
       - name: Run Tests with Coverage
         run: |
-          poetry run pytest --cov=agente_ucv --cov-report=xml
+          poetry run pytest --cov=agente_ucv --cov-report=xml:coverage.xml
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          # Le pasamos los datos exactos de tu cuenta para que sepa a dónde enviarlo
+          args: >
+            -Dsonar.projectKey=JavierAMLC_ucv-ate-si-laboratorio08
+            -Dsonar.organization=javieramlc
+            -Dsonar.python.coverage.reportPaths=coverage.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
