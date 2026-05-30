@@ -27,12 +27,13 @@ jobs:
         run: pip install poetry
 
       - name: Install Dependencies
-        working-directory: ./ucv-ate-si-laboratorio08
-        run: poetry install
+        run: |
+          cd ucv-ate-si-laboratorio08
+          poetry install
 
       - name: Run Tests with Coverage
-        working-directory: ./ucv-ate-si-laboratorio08
         run: |
+          cd ucv-ate-si-laboratorio08
           poetry run pytest --cov=agente_ucv --cov-report=xml:coverage.xml
 
       - name: SonarCloud Scan
