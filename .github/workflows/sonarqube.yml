@@ -12,18 +12,12 @@ jobs:
   sonarcloud:
     name: SonarCloud Scan
     runs-on: ubuntu-latest
-    
-    # Esto define la carpeta correcta para todo el flujo de comandos de forma global
-    defaults:
-      run:
-        working-directory: ucv-ate-si-laboratorio08
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Permite un análisis más completo de Git en Sonar
-          
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -33,9 +27,11 @@ jobs:
         run: pip install poetry
 
       - name: Install Dependencies
+        working-directory: ./ucv-ate-si-laboratorio08
         run: poetry install
 
       - name: Run Tests with Coverage
+        working-directory: ./ucv-ate-si-laboratorio08
         run: |
           poetry run pytest --cov=agente_ucv --cov-report=xml:coverage.xml
 
