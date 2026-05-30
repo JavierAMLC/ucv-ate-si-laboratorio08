@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - develop 
   pull_request:
     branches:
       - main
+      - develop 
 
 jobs:
   sonarcloud:
@@ -16,7 +18,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Permite un análisis más completo de Git en Sonar
+          fetch-depth: 0 
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -36,7 +38,6 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
-          # Le pasamos los datos exactos de tu cuenta para que sepa a dónde enviarlo
           args: >
             -Dsonar.projectKey=JavierAMLC_ucv-ate-si-laboratorio08
             -Dsonar.organization=javieramlc
